@@ -4,18 +4,17 @@ import com.example.demo.dto.Trainee;
 import com.example.demo.entity.TraineeEntity;
 import com.example.demo.repository.TraineeRepository;
 import com.example.demo.response.TraineeResponse;
+import com.example.demo.utils.Convert;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,8 +40,15 @@ public class TraineeServiceTest {
 
     @Test
     void should_create_trainee_success() {
-        TraineeEntity traineeEntity = TraineeEntity.builder().name("zhangsan").build();
-        Trainee trainee = Trainee.builder().name("zhangsan").build();
+        Trainee trainee = Trainee.builder()
+                .name("zhangsan")
+                .email("hu@Thoughtworks.com")
+                .github("1234")
+                .zoomId("1234")
+                .office("武汉")
+                .grouped(false)
+                .build();
+        TraineeEntity traineeEntity = Convert.toTraineeEntity(trainee);
         when(traineeRepository.save(traineeEntity)).thenReturn(traineeEntity);
 
         TraineeResponse newUser = traineeService.createTrainee(trainee);

@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.Trainee;
-import com.example.demo.entity.TraineeEntity;
 import com.example.demo.response.TraineeResponse;
 import com.example.demo.service.TraineeService;
 import com.example.demo.utils.Convert;
@@ -27,7 +26,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest
+@WebMvcTest(TraineeController.class)
 @AutoConfigureJsonTesters
 class TraineeControllerTest {
     @Autowired

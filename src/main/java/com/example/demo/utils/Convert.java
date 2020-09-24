@@ -1,8 +1,11 @@
 package com.example.demo.utils;
 
 import com.example.demo.dto.Trainee;
+import com.example.demo.dto.Trainer;
 import com.example.demo.entity.TraineeEntity;
+import com.example.demo.entity.TrainerEntity;
 import com.example.demo.response.TraineeResponse;
+import com.example.demo.response.TrainerResponse;
 
 public class Convert {
     public static TraineeEntity toTraineeEntity(Trainee trainee) {
@@ -30,6 +33,27 @@ public class Convert {
                 .github(traineeEntity.getGithub())
                 .office(traineeEntity.getOffice())
                 .zoomId(traineeEntity.getZoomId())
+                .build();
+    }
+
+    public static TrainerEntity toTrainerEntity(Trainer trainer) {
+        if (trainer == null) {
+            return null;
+        }
+        return TrainerEntity.builder()
+                .id(trainer.getId())
+                .name(trainer.getName())
+                .grouped(trainer.getGrouped())
+                .build();
+    }
+
+    public static TrainerResponse toTrainerResponse(TrainerEntity trainerEntity) {
+        if (trainerEntity == null) {
+            return null;
+        }
+        return TrainerResponse.builder()
+                .id(trainerEntity.getId())
+                .name(trainerEntity.getName())
                 .build();
     }
 }

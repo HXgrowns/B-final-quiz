@@ -4,7 +4,8 @@ public enum  ExceptionEnum {
     SUCCESS(0, "success"),
     UNKNOWN_ERROR(1, "unknown_error"),
     METHOD_ARGU_INVALID(2, ""),
-    TRAINEE_NOT_FOUND(3, "trainee not found");
+    TRAINEE_NOT_FOUND(3, "trainee not found"),
+    TRAINER_NOT_FOUND(4, "trainer not found");
 
     private int code;
     private String message;

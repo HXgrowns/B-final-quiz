@@ -8,21 +8,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "trainee")
+@Table(name = "trainer")
 @Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TraineeEntity {
+public class TrainerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
-    private String office;
-    private String email;
-    private String github;
-    private String zoomId;
     private Boolean grouped;
-
 }
