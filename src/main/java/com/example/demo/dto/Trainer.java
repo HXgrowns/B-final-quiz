@@ -16,4 +16,5 @@ public class Trainer {
     @NotBlank(message = "name is null")
     private String name;
     private Boolean grouped;
+    private Long groupId;
 }

@@ -1,7 +1,8 @@
 CREATE TABLE IF NOT EXISTS `trainer` (
   id int(11) PRIMARY KEY AUTO_INCREMENT,
   name varchar(255),
-  grouped tinyint(1)
+  grouped tinyint(1),
+  group_id int(11)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 CREATE TABLE IF NOT EXISTS `trainee` (
@@ -11,7 +12,15 @@ CREATE TABLE IF NOT EXISTS `trainee` (
   `email`  varchar(255),
   `github` varchar(255),
   `zoom_id` varchar(255),
-  grouped tinyint(1)
+  grouped tinyint(1),
+  group_id int(11)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
+CREATE TABLE IF NOT EXISTS `group` (
+  id int(11) PRIMARY KEY AUTO_INCREMENT,
+  name varchar(255),
+  trainee_id int(11),
+  trainer_id int(11)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
 
