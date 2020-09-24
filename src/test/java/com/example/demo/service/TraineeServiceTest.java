@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.Trainee;
 import com.example.demo.entity.TraineeEntity;
 import com.example.demo.repository.TraineeRepository;
 import com.example.demo.response.TraineeResponse;
@@ -34,6 +35,16 @@ public class TraineeServiceTest {
         List<TraineeResponse> result = traineeService.findTrainee(false);
         Assertions.assertThat(traineeEntities.get(0).getName()).isEqualTo(result.get(0).getName());
         Assertions.assertThat(traineeEntities.get(1).getName()).isEqualTo(result.get(1).getName());
+    }
+
+    @Test
+    void should_create_trainee_success() {
+        TraineeEntity traineeEntity = TraineeEntity.builder().name("zhangsan").build();
+        Trainee trainee = Trainee.builder().name("zhangsan").build();
+        when(traineeRepository.save(traineeEntity)).thenReturn(traineeEntity);
+
+        TraineeResponse newUser = traineeService.createTrainee(trainee);
+        Assertions.assertThat(traineeEntity.getName()).isEqualTo(newUser.getName());
     }
 
 }
