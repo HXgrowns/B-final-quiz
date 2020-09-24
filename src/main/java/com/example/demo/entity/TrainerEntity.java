@@ -19,9 +19,7 @@ public class TrainerEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Boolean grouped;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = GroupEntity.class)
     @JoinColumn(name = "group_id")
-    @JsonIgnore
     private GroupEntity group;
 }

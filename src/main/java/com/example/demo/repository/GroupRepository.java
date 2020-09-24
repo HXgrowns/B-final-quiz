@@ -4,4 +4,5 @@ import com.example.demo.entity.GroupEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GroupRepository extends JpaRepository<GroupEntity, Long> {
+    GroupEntity findByIdNotAndName(Long id, String name);
 }

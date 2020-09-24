@@ -1,11 +1,16 @@
 package com.example.demo.utils;
 
+import com.example.demo.controller.GroupController;
 import com.example.demo.dto.Trainee;
 import com.example.demo.dto.Trainer;
+import com.example.demo.entity.GroupEntity;
 import com.example.demo.entity.TraineeEntity;
 import com.example.demo.entity.TrainerEntity;
+import com.example.demo.response.GroupResponse;
 import com.example.demo.response.TraineeResponse;
 import com.example.demo.response.TrainerResponse;
+
+import java.util.ArrayList;
 
 public class Convert {
     public static TraineeEntity toTraineeEntity(Trainee trainee) {
@@ -17,7 +22,6 @@ public class Convert {
                 .name(trainee.getName())
                 .email(trainee.getEmail())
                 .github(trainee.getGithub())
-                .grouped(trainee.getGrouped())
                 .office(trainee.getOffice())
                 .zoomId(trainee.getZoomId())
                 .build();
@@ -43,7 +47,6 @@ public class Convert {
         return TrainerEntity.builder()
                 .id(trainer.getId())
                 .name(trainer.getName())
-                .grouped(trainer.getGrouped())
                 .build();
     }
 
@@ -55,5 +58,9 @@ public class Convert {
                 .id(trainerEntity.getId())
                 .name(trainerEntity.getName())
                 .build();
+    }
+
+    public static GroupResponse toGroupResponse(GroupEntity groupEntity) {
+        return new GroupResponse(groupEntity.getId(), groupEntity.getName(), new ArrayList<>(), new ArrayList<>());
     }
 }

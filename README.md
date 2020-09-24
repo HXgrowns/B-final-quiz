@@ -17,7 +17,7 @@
 | ------------------ | ------------------ |
 | 讲师            | trainer               |
 | 学员        | trainee             |
-| 组           | group            |
+| 组           | groupResponse            |
 
 ## API 列表
 
@@ -35,7 +35,7 @@
 
 ### 查询所有未分组学员
 
-只返回未被分组的学员，已被分配到 group 的学员不会出现在此 API 的返回结果中。
+只返回未被分组的学员，已被分配到 groupResponse 的学员不会出现在此 API 的返回结果中。
 
 #### ENDPOINT
 
@@ -169,7 +169,7 @@ $ curl -X DELETE localhost:8080/trainees/11
 
 ### 查询所有未分组讲师
 
-只返回未被分组的讲师，已被分配到 group 的讲师不会出现在此 API 的返回结果中。
+只返回未被分组的讲师，已被分配到 groupResponse 的讲师不会出现在此 API 的返回结果中。
 
 #### ENDPOINT
 
@@ -281,7 +281,7 @@ $ curl -X DELETE localhost:8080/trainers/1
 
 #### ENDPOINT
 
-GET /groups
+GET /groupResponses
 
 #### RESPONSE
 
@@ -293,7 +293,7 @@ GET /groups
 
 ##### Body
 
-查询成功会返回 group 的 list，如果没有分组，则返回 `[]`：
+查询成功会返回 groupResponse 的 list，如果没有分组，则返回 `[]`：
 
 | 字段:类型      | 说明               |
 | --------------|------------------- |
@@ -305,7 +305,7 @@ GET /groups
 #### EXAMPLE
 
 ```shell
-$ curl localhost:8080/groups
+$ curl localhost:8080/groupResponses
 [
     {
         "id": 1,
@@ -362,7 +362,7 @@ $ curl localhost:8080/groups
 
 #### ENDPOINT
 
-POST /groups/auto-grouping
+POST /groupResponses/auto-grouping
 
 #### RESPONSE
 
@@ -376,7 +376,7 @@ POST /groups/auto-grouping
 
 ##### Body
 
-分组成功会返回 group 的 list：
+分组成功会返回 groupResponse 的 list：
 
 | 字段:类型      | 说明               |
 | --------------|------------------- |
@@ -388,7 +388,7 @@ POST /groups/auto-grouping
 #### EXAMPLE
 
 ```shell
-$ curl -X POST localhost:8080/groups/auto-grouping
+$ curl -X POST localhost:8080/groupResponses/auto-grouping
 [
     {
         "id": 1,
@@ -445,7 +445,7 @@ $ curl -X POST localhost:8080/groups/auto-grouping
 
 #### ENDPOINT
 
-PATCH /groups/{group_id}
+PATCH /groupResponses/{group_id}
 
 #### REQUEST
 
@@ -472,7 +472,7 @@ PATCH /groups/{group_id}
 #### EXAMPLE
 
 ```shell
-$ curl -X PATCH --data '{"name": "new name"}' -H "Content-Type: application/json" localhost:8080/groups/{group_id}
+$ curl -X PATCH --data '{"name": "new name"}' -H "Content-Type: application/json" localhost:8080/groupResponses/{group_id}
 ```
 
 ## 返回结果说明

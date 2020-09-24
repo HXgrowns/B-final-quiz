@@ -1,7 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.Trainer;
+import com.example.demo.dto.Trainer;
+import com.example.demo.entity.TrainerEntity;
 import com.example.demo.response.TrainerResponse;
+import com.example.demo.response.TrainerResponse;
+import com.example.demo.service.TrainerService;
 import com.example.demo.service.TrainerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +18,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/v1/trainers")
+@RequestMapping("/trainers")
 @Validated
 public class TrainerController {
     private TrainerService trainerService;
@@ -24,8 +28,8 @@ public class TrainerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TrainerResponse>> findTrainerNotGroup(@RequestParam Boolean grouped) {
-        return ResponseEntity.status(HttpStatus.OK).body( trainerService.findTrainer(grouped));
+    public ResponseEntity<List<TrainerEntity>> findNotGroup(@RequestParam(required = false) Boolean grouped) {
+        return ResponseEntity.status(HttpStatus.OK).body( trainerService.findNotGroup(grouped));
     }
 
     @PostMapping

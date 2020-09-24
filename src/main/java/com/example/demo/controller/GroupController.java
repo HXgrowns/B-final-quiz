@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.GroupEntity;
+import com.example.demo.response.GroupResponse;
 import com.example.demo.service.GroupService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/v1/groups")
+@RequestMapping("/groups")
 @Validated
 public class GroupController {
     private GroupService groupService;
@@ -23,18 +24,17 @@ public class GroupController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GroupEntity>> findTraineeNotGroup() {
+    public ResponseEntity<List<GroupEntity>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body( groupService.findAll());
     }
 
     @PostMapping("/auto-grouping")
-    public ResponseEntity<List<GroupEntity>> createGroup() {
-        return ResponseEntity.ok().body(groupService.createGroup());
+    public ResponseEntity<List<GroupResponse>> autoGroupting() {
+        return ResponseEntity.ok().body(groupService.autoGroupting());
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<GroupEntity> updateByTeamName(@PathVariable @NotBlank Long id, @RequestParam String teamName) {
-        return ResponseEntity.ok().body(groupService.updateByTeamName(id, teamName));
+    public ResponseEntity<GroupEntity> updateNameById(@PathVariable Long id, @RequestParam String name) {
+        return ResponseEntity.ok().body(groupService.updateNameById(id, name));
     }
-
 }

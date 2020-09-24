@@ -24,10 +24,7 @@ public class TraineeEntity {
     private String email;
     private String github;
     private String zoomId;
-    private Boolean grouped;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "group_id")
-    @JsonIgnore
+    @ManyToOne(targetEntity = GroupEntity.class)
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
     private GroupEntity group;
-
 }

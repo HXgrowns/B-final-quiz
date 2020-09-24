@@ -4,9 +4,14 @@ spring:
     url: jdbc:mysql://127.0.0.1:3307/student_system?serverTimezone=Asia/Shanghai&useSSL=true&characterEncoding=utf-8&useSSL=false&useUnicode=true
     username: root
     password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
   flyway:
     encoding: utf-8
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3307/student_system?serverTimezone=Asia/Shanghai&useSSL=true&characterEncoding=utf-8&useSSL=false&useUnicode=true
     username: root
     password: root
+
