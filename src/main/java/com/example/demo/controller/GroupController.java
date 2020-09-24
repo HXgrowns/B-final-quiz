@@ -24,7 +24,7 @@ public class GroupController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GroupEntity>> findAll() {
+    public ResponseEntity<List<GroupResponse>> findAll() {
         return ResponseEntity.status(HttpStatus.OK).body( groupService.findAll());
     }
 

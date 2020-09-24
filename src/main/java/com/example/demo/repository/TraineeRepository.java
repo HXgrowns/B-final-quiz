@@ -21,4 +21,6 @@ public interface TraineeRepository extends JpaRepository<TraineeEntity, Long> {
     @Query(value = "update trainee set group_id=?1 where id=?2", nativeQuery = true)
     @Modifying
     void updateGroupId(Long groudId, Long id);
+
+    List<TraineeEntity> findByGroup(GroupEntity groupEntity);
 }

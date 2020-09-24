@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class GroupService {
@@ -30,8 +31,19 @@ public class GroupService {
         this.traineeRepository = traineeRepository;
     }
 
-    public List<GroupEntity> findAll() {
-        return groupRepository.findAll();
+    public List<GroupResponse> findAll() {
+        List<GroupEntity> groupEntities = groupRepository.findAll();
+        List<GroupResponse> groups = groupEntities.stream().map(Convert::toGroupResponse).collect(Collectors.toList());
+
+        for (int i = 0; i < groupEntities.size(); i++) {
+            GroupResponse group = groups.get(i);
+            GroupEntity groupEntity = groupEntities.get(i);
+            group.setTrainers(trainerRepository.findByGroup(groupEntity).stream()
+                    .map(Convert::toTrainerResponse).collect(Collectors.toList()));
+            group.setTrainees(traineeRepository.findByGroup(groupEntity).stream()
+                    .map(Convert::toTraineeResponse).collect(Collectors.toList()));
+        }
+        return groups;
     }
 
     @Transactional
