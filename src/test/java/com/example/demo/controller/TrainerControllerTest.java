@@ -47,16 +47,16 @@ public class TrainerControllerTest {
 
         @Test
         public void should_return_trainers_by_grouped_with_jsonPath() throws Exception {
-            when(trainerService.findTrainer(false))
+            when(trainerService.findNotGroup(false))
                     .thenReturn(Collections.singletonList(TrainerResponse.builder()
                             .id(1L)
                             .name("张三").build()));
 
-            mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/v1/trainers?grouped=false"))
+            mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/trainers?grouped=false"))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$[0].id", is(1)))
                     .andExpect(jsonPath("$[0].name", is("张三")));
-            verify(trainerService, times(1)).findTrainer(false);
+            verify(trainerService, times(1)).findNotGroup(false);
         }
 
     }
@@ -79,7 +79,7 @@ public class TrainerControllerTest {
             @Test
             public void should_add_trainer_with_jsonPath() throws Exception {
                 when(trainerService.createTrainer(newTrainer)).thenReturn(newTrainerResponse);
-                MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8080/v1/trainers")
+                MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8080/trainers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(trainerJacksonTester.write(newTrainer).getJson());
 
@@ -101,7 +101,7 @@ public class TrainerControllerTest {
             @Test
             public void should_throw_exception_with_jsonPath() throws Exception {
                 when(trainerService.createTrainer(inValidTrainer)).thenThrow(new RuntimeException("name is null"));
-                MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8080/v1/trainers")
+                MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("http://localhost:8080/trainers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(trainerJacksonTester.write(inValidTrainer).getJson());
 

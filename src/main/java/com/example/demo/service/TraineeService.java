@@ -20,14 +20,23 @@ public class TraineeService {
         this.traineeRepository = traineeRepository;
     }
 
-    public List<TraineeEntity> findNotGroup(Boolean grouped) {
+    public List<TraineeResponse> findNotGroup(Boolean grouped) {
         if(grouped == null) {
-            return traineeRepository.findAll();
+            return traineeRepository.findAll()
+                    .stream()
+                    .map(Convert::toTraineeResponse)
+                    .collect(Collectors.toList());
         } else if (grouped) {
-            return traineeRepository.findByGroupNotNull();
+            return traineeRepository.findByGroupNotNull()
+                    .stream()
+                    .map(Convert::toTraineeResponse)
+                    .collect(Collectors.toList());
         }
+        return traineeRepository.findByGroupNull()
+                .stream()
+                .map(Convert::toTraineeResponse)
+                .collect(Collectors.toList());
 
-        return traineeRepository.findByGroupNull();
     }
 
     public TraineeResponse createTrainee(Trainee trainee) {

@@ -1,6 +1,5 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.TraineeEntity;
 import com.example.demo.entity.TrainerEntity;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,10 +20,10 @@ public class TrainerRepositoryTest {
 
     @Test
     void findByUserId() {
-        TrainerEntity trainerEntity = TrainerEntity.builder().name("桂溪京").grouped(false).build();
+        TrainerEntity trainerEntity = TrainerEntity.builder().name("桂溪京").build();
         trainerEntity = manager.persistAndFlush(trainerEntity);
 
-        List<TrainerEntity> trainerEntities = trainerRepository.findByGrouped(false);
+        List<TrainerEntity> trainerEntities = trainerRepository.findByGroupNotNull();
         Assertions.assertThat(trainerEntities.get(0).getName()).isEqualTo(trainerEntity.getName());
     }
 }

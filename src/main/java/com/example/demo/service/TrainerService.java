@@ -9,6 +9,7 @@ import com.example.demo.response.TrainerResponse;
 import com.example.demo.utils.Convert;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TrainerService {
@@ -18,14 +19,23 @@ public class TrainerService {
         this.trainerRepository = trainerRepository;
     }
 
-    public List<TrainerEntity> findNotGroup(Boolean grouped) {
+    public List<TrainerResponse> findNotGroup(Boolean grouped) {
         if(grouped == null) {
-            return trainerRepository.findAll();
+            return trainerRepository.findAll()
+                    .stream()
+                    .map(Convert::toTrainerResponse)
+                    .collect(Collectors.toList());
         } else if (grouped) {
-            return trainerRepository.findByGroupNotNull();
+            return trainerRepository.findByGroupNotNull()
+                    .stream()
+                    .map(Convert::toTrainerResponse)
+                    .collect(Collectors.toList());
         }
 
-        return trainerRepository.findByGroupNull();
+        return trainerRepository.findByGroupNull()
+                .stream()
+                .map(Convert::toTrainerResponse)
+                .collect(Collectors.toList());
     }
 
     public TrainerResponse createTrainer(Trainer trainer) {

@@ -28,7 +28,7 @@ public class TrainerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TrainerEntity>> findNotGroup(@RequestParam(required = false) Boolean grouped) {
+    public ResponseEntity<List<TrainerResponse>> findNotGroup(@RequestParam(required = false) Boolean grouped) {
         return ResponseEntity.status(HttpStatus.OK).body( trainerService.findNotGroup(grouped));
     }
 

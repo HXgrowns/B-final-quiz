@@ -20,10 +20,10 @@ public class TraineeRepositoryTest {
 
     @Test
     void findByUserId() {
-        TraineeEntity traineeEntity = TraineeEntity.builder().name("沈乐棋").grouped(false).build();
+        TraineeEntity traineeEntity = TraineeEntity.builder().name("沈乐棋").build();
         traineeEntity = manager.persistAndFlush(traineeEntity);
 
-        List<TraineeEntity> traineeEntities = traineeRepository.findByGrouped(false);
+        List<TraineeEntity> traineeEntities = traineeRepository.findByGroupNotNull();
         Assertions.assertThat(traineeEntities.get(0).getName()).isEqualTo(traineeEntity.getName());
     }
 }
