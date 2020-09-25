@@ -34,6 +34,7 @@ public class GroupController {
     }
 
     @PatchMapping("/{id}")
+    // GTB: - 违反Restful, Patch接口要修改新字段应该通过RequestBody传递，并用对象来接收
     public ResponseEntity<GroupEntity> updateNameById(@PathVariable Long id, @RequestParam String name) {
         return ResponseEntity.ok().body(groupService.updateNameById(id, name));
     }

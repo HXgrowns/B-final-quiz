@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
         BindingResult bindingResult = e.getBindingResult();
         if (bindingResult.hasFieldErrors()) {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
+                // GTB: - 循环中的字符串拼接推荐使用StringBuilder
                 errMsg += fieldError.getDefaultMessage() + ",";
             }
         }

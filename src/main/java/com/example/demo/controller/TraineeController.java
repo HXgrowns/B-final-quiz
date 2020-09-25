@@ -16,8 +16,10 @@ import java.util.List;
 @RestController
 @CrossOrigin
 @RequestMapping("/trainees")
+// GTB：- 没有请求参数校验，不用加@Validated
 @Validated
 public class TraineeController {
+    // GET: - 构造器注入的属性推荐使用final
     private TraineeService traineeService;
 
     public TraineeController(TraineeService traineeService) {
@@ -25,6 +27,7 @@ public class TraineeController {
     }
 
     @GetMapping
+    // GTB: - @RequestParam应该显式写明value属性
     public ResponseEntity<List<TraineeResponse>> findNotGroup(@RequestParam(required = false) Boolean grouped) {
         return ResponseEntity.status(HttpStatus.OK).body( traineeService.findNotGroup(grouped));
     }
@@ -36,6 +39,7 @@ public class TraineeController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    // GTB: - @PathVariable应该显式写明value属性
     public void deleteById(@PathVariable @NotNull Long id) {
         traineeService.delete(id);
     }

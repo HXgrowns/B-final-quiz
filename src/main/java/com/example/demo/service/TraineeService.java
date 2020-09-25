@@ -21,6 +21,7 @@ public class TraineeService {
     }
 
     public List<TraineeResponse> findNotGroup(Boolean grouped) {
+        // GTB: - 下面的逻辑存在重复代码，可以进一步简化
         if(grouped == null) {
             return traineeRepository.findAll()
                     .stream()

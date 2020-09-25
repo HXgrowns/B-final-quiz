@@ -32,6 +32,7 @@ public class GroupService {
     }
 
     public List<GroupResponse> findAll() {
+        // GTB: - 没有使用@OneToMany注解处理一对多关系
         List<GroupEntity> groupEntities = groupRepository.findAll();
         List<GroupResponse> groups = groupEntities.stream().map(Convert::toGroupResponse).collect(Collectors.toList());
 
@@ -47,6 +48,7 @@ public class GroupService {
     }
 
     @Transactional
+    // GTB: - 拼写错误
     public List<GroupResponse> autoGroupting() {
         trainerRepository.deleteGroup(null);
         traineeRepository.deleteGroup(null);
@@ -57,6 +59,7 @@ public class GroupService {
 
         List<TraineeEntity> traineeEntities = traineeRepository.findAll();
         List<TrainerEntity> trainerEntities = trainerRepository.findAll();
+        // GTB: - magic number
         if (trainerEntities.size() < 2) {
             throw new BusinessException(ExceptionEnum.GROUP_NOT_ENOUGT);
         }
@@ -91,6 +94,7 @@ public class GroupService {
 
         Collections.shuffle(trainerEntities);
         for (int i = 0; i < trainerEntities.size() && i < teamCount * 2; i++) {
+            // GTB: - 拼写错误
             long groudId = i % teamCount + 1;
             TrainerEntity trainerEntity = trainerEntities.get(i);
             trainerRepository.updateGroupId(groudId, trainerEntity.getId());
@@ -122,6 +126,7 @@ public class GroupService {
 
     public GroupEntity updateNameById(Long id, String name) {
         GroupEntity groupEntity = groupRepository.findById(id).orElseThrow(() -> new BusinessException(ExceptionEnum.GROUP_NOT_FOUND));
+        // GTB - BUG: 修改小组名与原小组名相同时会报错
         if (groupRepository.findByIdNotAndName(id, name) != null) {
             throw new BusinessException(ExceptionEnum.GROUP_NAME_EXIST);
         }
