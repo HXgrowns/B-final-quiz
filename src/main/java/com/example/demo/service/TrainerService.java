@@ -8,43 +8,41 @@ import com.example.demo.repository.TrainerRepository;
 import com.example.demo.response.TrainerResponse;
 import com.example.demo.utils.Convert;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class TrainerService {
-    private TrainerRepository trainerRepository;
+    private final TrainerRepository TRAINERREPOSITORY;
 
-    public TrainerService(TrainerRepository trainerRepository) {
-        this.trainerRepository = trainerRepository;
+    public TrainerService(TrainerRepository TRAINERREPOSITORY) {
+        this.TRAINERREPOSITORY = TRAINERREPOSITORY;
     }
 
     public List<TrainerResponse> findNotGroup(Boolean grouped) {
-        if(grouped == null) {
-            return trainerRepository.findAll()
-                    .stream()
-                    .map(Convert::toTrainerResponse)
-                    .collect(Collectors.toList());
+        List<TrainerEntity> trainerEntities;
+        if (grouped == null) {
+            trainerEntities = TRAINERREPOSITORY.findAll();
         } else if (grouped) {
-            return trainerRepository.findByGroupNotNull()
-                    .stream()
-                    .map(Convert::toTrainerResponse)
-                    .collect(Collectors.toList());
+            trainerEntities = TRAINERREPOSITORY.findByGroupNotNull();
+        } else {
+            trainerEntities = TRAINERREPOSITORY.findByGroupNull();
         }
 
-        return trainerRepository.findByGroupNull()
+        return trainerEntities
                 .stream()
                 .map(Convert::toTrainerResponse)
                 .collect(Collectors.toList());
     }
 
     public TrainerResponse createTrainer(Trainer trainer) {
-        TrainerEntity trainerEntity = trainerRepository.save(Convert.toTrainerEntity(trainer));
+        TrainerEntity trainerEntity = TRAINERREPOSITORY.save(Convert.toTrainerEntity(trainer));
         return Convert.toTrainerResponse(trainerEntity);
     }
 
     public void delete(Long id) {
-        TrainerEntity trainerEntity = trainerRepository.findById(id).orElseThrow(() -> new BusinessException(ExceptionEnum.TRAINEE_NOT_FOUND));
-        trainerRepository.delete(trainerEntity);
+        TrainerEntity trainerEntity = TRAINERREPOSITORY.findById(id).orElseThrow(() -> new BusinessException(ExceptionEnum.TRAINEE_NOT_FOUND));
+        TRAINERREPOSITORY.delete(trainerEntity);
     }
 }

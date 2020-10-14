@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,7 +25,7 @@ public class TraineeEntity {
     private String email;
     private String github;
     private String zoomId;
-    @ManyToOne(targetEntity = GroupEntity.class)
-    @JoinColumn(name = "group_id", referencedColumnName = "id")
+    @ManyToOne
+    @JsonBackReference
     private GroupEntity group;
 }

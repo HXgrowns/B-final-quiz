@@ -2,6 +2,7 @@ package com.example.demo.component;
 
 import com.example.demo.exception.BusinessException;
 import com.example.demo.exception.ExceptionEnum;
+import com.example.demo.exception.GroupException;
 import com.example.demo.response.Result;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,23 +22,28 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Result.errorBusiness(e.getExceptionEnum()));
     }
 
+    @ExceptionHandler(value = GroupException.class)
+    public ResponseEntity<?> handleGroupException(GroupException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Result.errorBusiness(e.getExceptionEnum()));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<?> handleMethodArgumentNotValidExceptionException(MethodArgumentNotValidException e) {
-        String errMsg = "";
+        StringBuilder errMsg = new StringBuilder();
 
         BindingResult bindingResult = e.getBindingResult();
         if (bindingResult.hasFieldErrors()) {
             for (FieldError fieldError : bindingResult.getFieldErrors()) {
                 // GTB: - 循环中的字符串拼接推荐使用StringBuilder
-                errMsg += fieldError.getDefaultMessage() + ",";
+                errMsg.append(fieldError.getDefaultMessage()).append(",");
             }
         }
 
         if (errMsg.length() > 0) {
-            errMsg = errMsg.substring(0, errMsg.length() - 1);
+            errMsg = new StringBuilder(errMsg.substring(0, errMsg.length() - 1));
         }
 
-        ExceptionEnum.METHOD_ARGU_INVALID.setMessage(errMsg);
+        ExceptionEnum.METHOD_ARGU_INVALID.setMessage(errMsg.toString());
         return ResponseEntity.badRequest().body(Result.errorBusiness(ExceptionEnum.METHOD_ARGU_INVALID));
     }
 

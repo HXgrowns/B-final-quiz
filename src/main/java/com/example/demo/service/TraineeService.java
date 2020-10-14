@@ -14,26 +14,23 @@ import java.util.stream.Collectors;
 
 @Service
 public class TraineeService {
-    private TraineeRepository traineeRepository;
+    private final TraineeRepository TRAINEEREPOSITORY;
 
-    public TraineeService(TraineeRepository traineeRepository) {
-        this.traineeRepository = traineeRepository;
+    public TraineeService(TraineeRepository TRAINEEREPOSITORY) {
+        this.TRAINEEREPOSITORY = TRAINEEREPOSITORY;
     }
 
     public List<TraineeResponse> findNotGroup(Boolean grouped) {
         // GTB: - 下面的逻辑存在重复代码，可以进一步简化
-        if(grouped == null) {
-            return traineeRepository.findAll()
-                    .stream()
-                    .map(Convert::toTraineeResponse)
-                    .collect(Collectors.toList());
+        List<TraineeEntity> traineeEntities;
+        if (grouped == null) {
+            traineeEntities = TRAINEEREPOSITORY.findAll();
         } else if (grouped) {
-            return traineeRepository.findByGroupNotNull()
-                    .stream()
-                    .map(Convert::toTraineeResponse)
-                    .collect(Collectors.toList());
+            traineeEntities = TRAINEEREPOSITORY.findByGroupNotNull();
+        } else {
+            traineeEntities = TRAINEEREPOSITORY.findByGroupNull();
         }
-        return traineeRepository.findByGroupNull()
+        return traineeEntities
                 .stream()
                 .map(Convert::toTraineeResponse)
                 .collect(Collectors.toList());
@@ -41,12 +38,12 @@ public class TraineeService {
     }
 
     public TraineeResponse createTrainee(Trainee trainee) {
-        TraineeEntity traineeEntity = traineeRepository.save(Convert.toTraineeEntity(trainee));
+        TraineeEntity traineeEntity = TRAINEEREPOSITORY.save(Convert.toTraineeEntity(trainee));
         return Convert.toTraineeResponse(traineeEntity);
     }
 
     public void delete(Long id) {
-        TraineeEntity traineeEntity = traineeRepository.findById(id).orElseThrow(() -> new BusinessException(ExceptionEnum.TRAINEE_NOT_FOUND));
-        traineeRepository.delete(traineeEntity);
+        TraineeEntity traineeEntity = TRAINEEREPOSITORY.findById(id).orElseThrow(() -> new BusinessException(ExceptionEnum.TRAINEE_NOT_FOUND));
+        TRAINEEREPOSITORY.delete(traineeEntity);
     }
 }
