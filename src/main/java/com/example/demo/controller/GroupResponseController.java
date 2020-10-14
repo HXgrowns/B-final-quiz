@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ChangeOfGroupName;
 import com.example.demo.entity.GroupEntity;
 import com.example.demo.service.GroupService;
+import jdk.internal.org.objectweb.asm.tree.analysis.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -32,7 +34,7 @@ public class GroupResponseController {
 
     @PatchMapping("/{id}")
     // GTB: - 违反Restful, Patch接口要修改新字段应该通过RequestBody传递，并用对象来接收
-    public ResponseEntity<GroupEntity> updateNameById(@PathVariable Long id, @RequestParam String name) {
-        return ResponseEntity.ok().body(GROUPSERVICE.updateNameById(id, name));
+    public ResponseEntity<GroupEntity> updateNameById(@PathVariable Long id, @RequestBody ChangeOfGroupName groupName) {
+        return ResponseEntity.ok().body(GROUPSERVICE.updateNameById(id, groupName));
     }
 }

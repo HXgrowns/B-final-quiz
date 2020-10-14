@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.ChangeOfGroupName;
 import com.example.demo.entity.GroupEntity;
 import com.example.demo.entity.TraineeEntity;
 import com.example.demo.entity.TrainerEntity;
@@ -87,9 +88,9 @@ public class GroupService {
         groupRepository.flush();
     }
 
-    public GroupEntity updateNameById(Long id, String name) {
+    public GroupEntity updateNameById(Long id, ChangeOfGroupName groupName) {
         GroupEntity groupEntity = groupRepository.findById(id).orElseThrow(() -> new BusinessException(ExceptionEnum.GROUP_NOT_FOUND));
-        // GTB - BUG: 修改小组名与原小组名相同时会报错
+        String name = groupName.getGroupName();
         if (groupRepository.findByIdNotAndName(id, name) != null) {
             throw new BusinessException(ExceptionEnum.GROUP_NAME_EXIST);
         }
